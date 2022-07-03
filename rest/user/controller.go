@@ -53,7 +53,7 @@ func (c Controller) registration() {
 		}
 
 		db.DB.Save(&user)
-		return ctx.JSON(user)
+		return ctx.JSON(user.Dto())
 	})
 }
 
