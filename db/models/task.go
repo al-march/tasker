@@ -8,4 +8,7 @@ type Task struct {
 	Description string
 	Status      string
 	UserID      uint
+	ProjectID   uint
+
+	Tags []Tag `gorm:"many2many:task_tags"`
 }

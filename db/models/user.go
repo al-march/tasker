@@ -11,7 +11,9 @@ type User struct {
 	Email    string
 	Phone    string
 
-	Tasks []Task `gorm:"foreignKey:UserID"`
+	Tasks    []Task    `gorm:"foreignKey:UserID"`
+	Projects []Project `gorm:"foreignKey:UserID"`
+	Tags     []Tag     `gorm:"foreignKey:UserID"`
 }
 
 func (u User) Dto() UserDto {

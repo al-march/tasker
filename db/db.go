@@ -14,6 +14,7 @@ func Init() {
 
 	err := DB.AutoMigrate(
 		&models.User{},
+		&models.Project{},
 		&models.Task{},
 		&models.Tag{},
 	)

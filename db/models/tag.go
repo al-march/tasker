@@ -7,14 +7,16 @@ import (
 
 type Tag struct {
 	gorm.Model
-	Title string
-	Color constants.Color
+	UserID uint
+	Title  string
+	Color  constants.Color
 }
 
 func (t Tag) Dto() TagDto {
 	return TagDto{
-		ID:    t.ID,
-		Title: t.Title,
+		ID:     t.ID,
+		Title:  t.Title,
+		UserID: t.UserID,
 		Color: TagColorDto{
 			ID:    int(t.Color),
 			Value: t.Color.String(),
@@ -23,9 +25,10 @@ func (t Tag) Dto() TagDto {
 }
 
 type TagDto struct {
-	ID    uint   `json:"id"`
-	Title string `json:"title"`
-	Color struct {
+	ID     uint   `json:"id"`
+	UserID uint   `json:"userId"`
+	Title  string `json:"title"`
+	Color  struct {
 		ID    int    `json:"id"`
 		Value string `json:"value"`
 	}
