@@ -1,14 +1,43 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+	"time"
+)
 
 type Task struct {
 	gorm.Model
+	UserID      uint
+	ProjectID   uint
 	Title       string
 	Description string
 	Status      string
-	UserID      uint
-	ProjectID   uint
 
 	Tags []Tag `gorm:"many2many:task_tags"`
+}
+
+func (t Task) Dto() TaskDto {
+	return TaskDto{
+		ID:          t.ID,
+		UserID:      t.UserID,
+		ProjectID:   t.ProjectID,
+		Title:       t.Title,
+		Description: t.Description,
+		Tags:        t.Tags,
+
+		CreatedAt: t.CreatedAt,
+		UpdatedAt: t.UpdatedAt,
+	}
+}
+
+type TaskDto struct {
+	ID          uint      `json:"id"`
+	UserID      uint      `json:"userId"`
+	ProjectID   uint      `json:"projectId"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	Status      string    `json:"status"`
+	Tags        []Tag     `json:"tags"`
+	CreatedAt   time.Time `json:"createdAt"`
+	UpdatedAt   time.Time `json:"updatedAt"`
 }
