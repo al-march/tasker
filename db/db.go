@@ -12,7 +12,12 @@ var DB *gorm.DB
 func Init() {
 	DB = CreateDb(config.Data.DbName)
 
-	err := DB.AutoMigrate(&models.User{}, &models.Task{})
+	err := DB.AutoMigrate(
+		&models.User{},
+		&models.Task{},
+		&models.Tag{},
+	)
+
 	if err != nil {
 		panic("failed to auto migrate database")
 	}
