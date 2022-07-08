@@ -13,7 +13,8 @@ type Task struct {
 	Description string
 	Status      string
 
-	Tags []Tag `gorm:"many2many:task_tags"`
+	Tags     []Tag     `gorm:"many2many:task_tags"`
+	Comments []Comment `gorm:"foreignKey:TaskID"`
 }
 
 func (t Task) Dto() TaskDto {

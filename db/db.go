@@ -16,6 +16,7 @@ func Init() {
 		&models.User{},
 		&models.Project{},
 		&models.Task{},
+		&models.Comment{},
 		&models.Tag{},
 	)
 
