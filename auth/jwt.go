@@ -1,4 +1,4 @@
-package user
+package auth
 
 import (
 	"github.com/gofiber/fiber/v2"
@@ -20,7 +20,7 @@ func CreateClaims(u models.User) jwt.MapClaims {
 	}
 }
 
-func TakeFromCtx(ctx *fiber.Ctx) JwtUser {
+func TakeUser(ctx *fiber.Ctx) JwtUser {
 	user := ctx.Locals("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
 

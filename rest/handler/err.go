@@ -10,7 +10,7 @@ type Error struct {
 var (
 	ErrorAlreadyExist     = Error{Message: "Entity already exists", Status: fiber.StatusBadRequest}
 	ErrorInvalidRequest   = Error{Message: "Invalid request data", Status: fiber.StatusBadRequest}
-	ErrorNotFound         = Error{Message: "Entity not found", Status: fiber.StatusNotFound}
+	ErrorEntityNotFound   = Error{Message: "Entity not found", Status: fiber.StatusNotFound}
 	ErrorUserNotFound     = Error{Message: "User not found", Status: fiber.StatusNotFound}
 	ErrorInvalidUserLogin = Error{Message: "Invalid user login data", Status: fiber.StatusBadRequest}
 	ErrorServerInternal   = Error{Message: "Internal server error", Status: fiber.StatusInternalServerError}

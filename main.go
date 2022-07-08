@@ -6,6 +6,7 @@ import (
 	"strings"
 	"tasker/config"
 	"tasker/db"
+	"tasker/rest/project"
 	"tasker/rest/user"
 )
 
@@ -27,7 +28,9 @@ func main() {
 	}))
 
 	userController := user.Controller{App: app}
+	projectController := project.Controller{App: app}
 	userController.Init()
+	projectController.Init()
 
 	err := app.Listen(":8080")
 	if err != nil {

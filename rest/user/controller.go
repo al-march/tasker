@@ -7,6 +7,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 	"log"
+	"tasker/auth"
 	"tasker/config"
 	"tasker/db"
 	"tasker/db/models"
@@ -94,7 +95,7 @@ func (c Controller) login() {
 			return ctx.Status(err.Status).JSON(err)
 		}
 
-		claims := CreateClaims(user)
+		claims := auth.CreateClaims(user)
 		token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 		t, err := token.SignedString([]byte(config.Data.JwtSecret))
@@ -112,7 +113,7 @@ func (c Controller) login() {
 
 func (c Controller) info() {
 	c.App.Get(privatePath+"/info", func(ctx *fiber.Ctx) error {
-		u := TakeFromCtx(ctx)
+		u := auth.TakeUser(ctx)
 
 		var user models.User
 		err := db.DB.Where("id = ?", u.ID).First(&user).Error
