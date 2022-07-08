@@ -11,6 +11,7 @@ var Data = config{}
 type config struct {
 	ClientUrl string `yaml:"client_url"`
 	DbName    string `yaml:"db_name"`
+	JwtSecret string `yaml:"jwt_secret"`
 }
 
 func (c *config) Init() *config {

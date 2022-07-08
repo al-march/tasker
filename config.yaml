@@ -1,1 +1,2 @@
 db_name: "tasker.dev.db"
+jwt_secret: "secret"
