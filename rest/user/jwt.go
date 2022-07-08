@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type Jwt struct {
+type JwtUser struct {
 	Login string
 	ID    uint
 }
@@ -20,14 +20,15 @@ func CreateClaims(u models.User) jwt.MapClaims {
 	}
 }
 
-func (j *Jwt) TakeUser(ctx *fiber.Ctx) *Jwt {
+func TakeFromCtx(ctx *fiber.Ctx) JwtUser {
 	user := ctx.Locals("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
 
-	login := claims["name"].(string)
+	login := claims["login"].(string)
 	id := uint(claims["id"].(float64))
 
-	j.ID = id
-	j.Login = login
-	return j
+	return JwtUser{
+		ID:    id,
+		Login: login,
+	}
 }

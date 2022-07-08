@@ -14,6 +14,7 @@ import (
 )
 
 const publicPath = "api/v1/auth"
+const privatePath = "api/v1/profile"
 
 type Controller struct {
 	App *fiber.App
@@ -22,6 +23,8 @@ type Controller struct {
 func (c Controller) Init() {
 	c.registration()
 	c.login()
+	// private methods
+	c.info()
 }
 
 func (c Controller) registration() {
@@ -104,6 +107,21 @@ func (c Controller) login() {
 			"user":  user.Dto(),
 			"token": t,
 		})
+	})
+}
+
+func (c Controller) info() {
+	c.App.Get(privatePath+"/info", func(ctx *fiber.Ctx) error {
+		u := TakeFromCtx(ctx)
+
+		var user models.User
+		err := db.DB.Where("id = ?", u.ID).First(&user).Error
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			err := handler.ErrorServerInternal
+			return ctx.Status(err.Status).JSON(err)
+		}
+
+		return ctx.JSON(user.Dto())
 	})
 }
 
