@@ -2,6 +2,7 @@ package models
 
 import (
 	"gorm.io/gorm"
+	"tasker/utils"
 	"time"
 )
 
@@ -16,12 +17,16 @@ type Project struct {
 }
 
 func (p Project) Dto() ProjectDto {
+	tags := utils.Map(p.Tags, func(item Tag) TagDto {
+		return item.Dto()
+	})
+
 	return ProjectDto{
 		ID:          p.ID,
 		UserID:      p.UserID,
 		Title:       p.Title,
 		Description: p.Description,
-		Tags:        p.Tags,
+		Tags:        tags,
 		CreatedAt:   p.CreatedAt,
 		UpdatedAt:   p.UpdatedAt,
 	}
@@ -32,7 +37,7 @@ type ProjectDto struct {
 	UserID      uint      `json:"userId"`
 	Title       string    `json:"title"`
 	Description string    `json:"description"`
-	Tags        []Tag     `json:"tags"`
+	Tags        []TagDto  `json:"tags"`
 	CreatedAt   time.Time `json:"createdAt"`
 	UpdatedAt   time.Time `json:"updatedAt"`
 }

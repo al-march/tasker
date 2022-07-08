@@ -31,7 +31,7 @@ type TagDto struct {
 	Color  struct {
 		ID    int    `json:"id"`
 		Value string `json:"value"`
-	}
+	} `json:"color"`
 }
 
 type TagColorDto struct {
