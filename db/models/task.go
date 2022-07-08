@@ -18,13 +18,15 @@ type Task struct {
 }
 
 func (t Task) Dto() TaskDto {
+	tags := entitiesToDto[TagDto](t.Tags)
+
 	return TaskDto{
 		ID:          t.ID,
 		UserID:      t.UserID,
 		ProjectID:   t.ProjectID,
 		Title:       t.Title,
 		Description: t.Description,
-		Tags:        t.Tags,
+		Tags:        tags,
 
 		CreatedAt: t.CreatedAt,
 		UpdatedAt: t.UpdatedAt,
@@ -38,7 +40,7 @@ type TaskDto struct {
 	Title       string    `json:"title"`
 	Description string    `json:"description"`
 	Status      string    `json:"status"`
-	Tags        []Tag     `json:"tags"`
+	Tags        []TagDto  `json:"tags"`
 	CreatedAt   time.Time `json:"createdAt"`
 	UpdatedAt   time.Time `json:"updatedAt"`
 }
