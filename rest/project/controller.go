@@ -20,6 +20,7 @@ type Controller struct {
 
 func (c Controller) Init() {
 	c.create()
+	c.update()
 	c.get()
 	c.getAll()
 }
@@ -98,5 +99,39 @@ func (c Controller) get() {
 		}
 
 		return ctx.JSON(project.Dto())
+	})
+}
+
+func (c Controller) update() {
+	c.App.Put(path+"/:id", func(ctx *fiber.Ctx) error {
+		user := auth.TakeUser(ctx)
+		projectID, err := strconv.Atoi(ctx.Params("id"))
+		if err != nil {
+			err := handler.ErrorInvalidRequest
+			return ctx.Status(err.Status).JSON(err)
+		}
+
+		var req models.Project
+		if err := ctx.BodyParser(&req); err != nil {
+			err := handler.ErrorInvalidRequest
+			return ctx.Status(err.Status).JSON(err)
+		}
+
+		var entity models.Project
+		err = db.DB.
+			Where("id = ? AND user_id = ?", projectID, user.ID).
+			First(&entity).
+			Error
+
+		if err != nil {
+			err := handler.ErrorEntityNotFound
+			return ctx.Status(err.Status).JSON(err)
+		}
+
+		entity.Title = req.Title
+		entity.Description = req.Description
+		db.DB.Save(&entity)
+
+		return ctx.JSON(entity.Dto())
 	})
 }
