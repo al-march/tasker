@@ -13,7 +13,12 @@
           <span>Projects</span>
         </li>
         <li *ngFor="let project of projects$ | async">
-          <a class="flex gap-4">
+          <a
+            class="flex gap-4"
+            [routerLink]="['project', project.id]"
+            [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="{ exact: false }"
+          >
             <span class="flex-1">{{project.title}}</span>
           </a>
         </li>
