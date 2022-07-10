@@ -53,3 +53,14 @@ Authorization: Bearer {{auth_token}}
 GET http://127.0.0.1:8080/api/v1/project/1
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
+
+###
+POST http://127.0.0.1:8080/api/v1/task
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "projectId": 1,
+  "title": "task 2",
+  "description": "description of task"
+}
