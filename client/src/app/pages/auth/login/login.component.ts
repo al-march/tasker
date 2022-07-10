@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AuthService, LoginDto } from '@app/core/services';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,10 +9,25 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
+  user: LoginDto = {
+    login: '',
+    password: ''
+  };
 
-  constructor() { }
+  constructor(
+    public authService: AuthService,
+    public router: Router
+  ) {
+  }
 
   ngOnInit(): void {
   }
 
+  onSubmit() {
+    this.authService.login(this.user).subscribe(data => {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      this.router.navigate(['']);
+    });
+  }
 }

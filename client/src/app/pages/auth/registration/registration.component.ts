@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AuthService, RegistrationDto } from '@app/core/services';
 
 @Component({
   selector: 'app-registration',
@@ -7,10 +8,23 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegistrationComponent implements OnInit {
+  user: RegistrationDto = {
+    login: '',
+    password: '',
+    name: ''
+  };
 
-  constructor() { }
+  constructor(
+    public authService: AuthService
+  ) {
+  }
 
   ngOnInit(): void {
+  }
+
+  onSubmit() {
+    this.authService.registration(this.user).subscribe(data => {
+    });
   }
 
 }
