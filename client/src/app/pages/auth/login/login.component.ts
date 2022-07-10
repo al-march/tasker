@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AuthService, LoginDto } from '@app/core/services';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs';
+import { AuthService } from '@app/core/services';
+import { LoginDto } from '@app/core/dto';
 
 @Component({
   selector: 'app-login',

@@ -1,4 +1,4 @@
-import { UserDto } from '@app/core/services';
+import { UserDto } from '@app/core/dto';
 
 export interface LoginDto {
   login: string,

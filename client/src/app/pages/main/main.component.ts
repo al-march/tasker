@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ProjectService } from '@app/core/services';
 
 @Component({
   selector: 'app-main',
@@ -8,9 +9,14 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private projects: ProjectService
+  ) { }
 
   ngOnInit(): void {
+    this.projects.getAll().subscribe(projects => {
+      console.log(projects);
+    })
   }
 
 }
