@@ -17,7 +17,7 @@ import { Config } from '@app/core/services';
     TemplateModule,
   ],
   providers: [
-    Config
+    Config,
   ],
   bootstrap: [AppComponent]
 })

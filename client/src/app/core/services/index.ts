@@ -1,4 +1,5 @@
 export * from './base/base-api.service';
+export * from './base/base-url.decorator';
 export * from './config/config';
 export * from './auth/auth.service';
 export * from './tag/tag.service';

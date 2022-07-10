@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BaseApiService } from '@app/core/services';
+import { ApiRoute, BaseApiService } from '@app/core/services';
 
+@ApiRoute('tag')
 @Injectable({
   providedIn: 'root'
 })

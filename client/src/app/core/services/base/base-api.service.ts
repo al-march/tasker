@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class BaseApiService {
+export abstract class BaseApiService {
 
   get url() {
     return this.config.host;

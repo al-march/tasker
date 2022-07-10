@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BaseApiService } from '@app/core/services';
+import { ApiRoute, BaseApiService } from '@app/core/services';
 import { ProjectCreateDto, ProjectDto } from '@app/core/dto';
 
-
+@ApiRoute('project')
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +17,7 @@ export class ProjectService extends BaseApiService {
   }
 
   getAll() {
-    return this.http.get<ProjectDto[]>(`${this.url}`);
+    return this.http.get<ProjectDto[]>(`${this.url}/all`);
   }
 
   get(id: number) {
