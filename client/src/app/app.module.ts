@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TemplateModule } from './core/template/template.module';
+import { TemplateModule } from '@app/core/template';
 
 @NgModule({
   declarations: [
@@ -17,4 +17,4 @@ import { TemplateModule } from './core/template/template.module';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
