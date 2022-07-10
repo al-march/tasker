@@ -16,6 +16,7 @@ const path = "api/v1/task"
 
 func (c Controller) Init() {
 	c.create()
+	c.get()
 }
 
 func (c Controller) create() {
@@ -41,6 +42,28 @@ func (c Controller) create() {
 			Description: request.Description,
 		}
 		db.DB.Save(&task)
+		return ctx.JSON(task.Dto())
+	})
+}
+
+func (c Controller) get() {
+	c.App.Get(path+"/:id", func(ctx *fiber.Ctx) error {
+		user := auth.TakeUser(ctx)
+
+		taskID := ctx.Params("id", "0")
+
+		var task models.Task
+		err := db.DB.
+			Where("id = ? AND user_id = ?", taskID, user.ID).
+			Preload("Tags").
+			First(&task).
+			Error
+
+		if err != nil {
+			err := handler.ErrorEntityNotFound
+			return ctx.Status(err.Status).JSON(err)
+		}
+
 		return ctx.JSON(task.Dto())
 	})
 }
