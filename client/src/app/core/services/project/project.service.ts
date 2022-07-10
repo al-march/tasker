@@ -17,7 +17,7 @@ export class ProjectService extends BaseApiService {
   }
 
   getAll() {
-    return this.http.get<ProjectDto[]>(`${this.url}/all`);
+    return this.http.get<ProjectDto[]>(`${this.url}`);
   }
 
   get(id: number) {

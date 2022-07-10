@@ -1,6 +1,6 @@
 <div class="drawer drawer-mobile overflow-hidden h-full">
   <input id="my-drawer-2" type="checkbox" class="drawer-toggle"/>
-  <div class="drawer-content flex flex-col items-center justify-center">
+  <div class="drawer-content flex flex-col">
     <ng-content></ng-content>
     <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">Open drawer</label>
   </div>
@@ -12,14 +12,9 @@
         <li class="menu-title">
           <span>Projects</span>
         </li>
-        <li>
+        <li *ngFor="let project of projects$ | async">
           <a class="flex gap-4">
-            <span class="flex-1">Home deals</span>
-          </a>
-        </li>
-        <li>
-          <a class="flex gap-4">
-            <span class="flex-1">Work</span>
+            <span class="flex-1">{{project.title}}</span>
           </a>
         </li>
       </ul>

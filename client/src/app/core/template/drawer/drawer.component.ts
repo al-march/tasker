@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ProjectService } from '@app/core/services';
 
 @Component({
   selector: 'app-drawer',
@@ -8,7 +9,11 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 })
 export class DrawerComponent implements OnInit {
 
-  constructor() { }
+  projects$ = this.projects.getAll();
+
+  constructor(
+    private projects: ProjectService
+  ) { }
 
   ngOnInit(): void {
   }
