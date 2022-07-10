@@ -25,6 +25,10 @@ func (c Controller) create() {
 			ProjectID   uint   `json:"projectId"`
 			Title       string `json:"title"`
 			Description string `json:"description"`
+
+			Tags []struct {
+				ID uint
+			} `json:"tags"`
 		}
 
 		user := auth.TakeUser(ctx)
@@ -35,11 +39,25 @@ func (c Controller) create() {
 			return ctx.Status(err.Status).JSON(err)
 		}
 
+		var tags []models.Tag
+		for _, tag := range request.Tags {
+			var entity models.Tag
+			err := db.DB.
+				Where("id = ? AND user_id = ?", tag.ID, user.ID).
+				First(&entity).
+				Error
+
+			if err == nil {
+				tags = append(tags, entity)
+			}
+		}
+
 		task := models.Task{
 			UserID:      user.ID,
 			ProjectID:   request.ProjectID,
 			Title:       request.Title,
 			Description: request.Description,
+			Tags:        tags,
 		}
 		db.DB.Save(&task)
 		return ctx.JSON(task.Dto())
