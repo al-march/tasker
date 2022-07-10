@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
-import { Config } from '@app/core/services/config/config';
 import { HttpClient } from '@angular/common/http';
+import { Config } from '@app/core/services';
 
 export interface LoginDto {
-  'login': string,
-  'password': string,
+  login: string,
+  password: string,
 }
 
 export interface RegistrationDto {
-  'login': string,
-  'password': string,
-  'name': string
+  login: string,
+  password: string,
+  name: string
 }
 
 export interface LoginResponse {
   token: string;
-  'user': UserDto;
+  user: UserDto;
 }
 
 export interface UserDto {
-  'id': number,
-  'login': string,
-  'name'?: string,
-  'surname'?: string,
-  'email'?: string,
-  'phone'?: string
+  id: number,
+  login: string,
+  name?: string,
+  surname?: string,
+  email?: string,
+  phone?: string
 }
 
 @Injectable({
