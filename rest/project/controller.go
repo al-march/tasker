@@ -9,6 +9,7 @@ import (
 	"tasker/db"
 	"tasker/db/models"
 	"tasker/rest/handler"
+	"tasker/utils"
 )
 
 const path = "api/v1/project"
@@ -20,6 +21,7 @@ type Controller struct {
 func (c Controller) Init() {
 	c.create()
 	c.get()
+	c.getAll()
 }
 
 func (c Controller) create() {
@@ -44,6 +46,33 @@ func (c Controller) create() {
 
 		db.DB.Save(&project)
 		return ctx.JSON(project.Dto())
+	})
+}
+
+func (c Controller) getAll() {
+	c.App.Get(path, func(ctx *fiber.Ctx) error {
+		user := auth.TakeUser(ctx)
+
+		var entities []models.Project
+		err := db.DB.
+			Where("user_id = ?", user.ID).
+			Preload("Tags").
+			Find(&entities).
+			Error
+
+		if err != nil {
+			e := handler.Error{
+				Message: err.Error(),
+				Status:  fiber.StatusBadRequest,
+			}
+			return ctx.Status(e.Status).JSON(e)
+		}
+
+		projects := utils.Map(entities, func(project models.Project) models.ProjectDto {
+			return project.Dto()
+		})
+
+		return ctx.JSON(projects)
 	})
 }
 
