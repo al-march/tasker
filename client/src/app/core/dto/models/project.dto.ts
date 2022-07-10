@@ -9,3 +9,9 @@ export interface ProjectDto {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ProjectCreateDto {
+  title: string;
+  description: string;
+  tags?: TagDto[],
+}
