@@ -1,4 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AuthService, LoginDto } from '@app/core/services';
+import { Router } from '@angular/router';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -7,10 +10,45 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
+  user: LoginDto = {
+    login: '',
+    password: ''
+  };
 
-  constructor() { }
+  constructor(
+    public authService: AuthService,
+    public router: Router
+  ) {
+  }
 
   ngOnInit(): void {
   }
 
+  onSubmit() {
+    this.authService.login(this.user)
+      .pipe(catchError((err) => {
+        this.handleError(err);
+        throw new Error(err);
+      }))
+      .subscribe(data => {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          this.router.navigate(['']);
+        },
+      );
+  }
+
+  handleError(err: any) {
+    const status = err.status as number;
+
+    switch (status) {
+      case 404:
+      case 400:
+        const error: { message: string } = err.error;
+        alert(error.message);
+        break;
+      default:
+        alert('Что-то пошло не так');
+    }
+  }
 }
