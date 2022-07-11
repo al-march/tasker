@@ -1,33 +1,45 @@
-<form name="form" (ngSubmit)="createTag()">
-  <input
-    type="text"
-    name="title"
-    placeholder="Type here"
-    required
-    class="input w-full max-w-xs"
-    [formControl]="addTagControl"
-    [(ngModel)]="tag.title"
-  />
-  <select
-    class="select w-full max-w-xs"
-    name="color"
-    [(ngModel)]="tag.color"
+<section class="p-4">
+  <form
+    class="flex gap-2"
+    [formGroup]="form"
+    (ngSubmit)="createTag()"
   >
-    <option disabled selected>Pick your favorite Simpson</option>
-    <option
-      *ngFor="let color of colors"
-      [ngValue]="color.id"
-    >
-      {{color.value}}
-    </option>
-  </select>
-  <button type="submit" class="btn" [disabled]="addTagControl.invalid">Button</button>
-</form>
+    <input
+      type="text"
+      placeholder="Type here"
+      required
+      class="input input-bordered w-full max-w-xs"
+      formControlName="title"
+    />
 
-<div class="p-4">
-  <span
-    class="badge"
-    *ngFor="let tag of tags">
-    {{tag.title}}
-  </span>
-</div>
+    <select
+      class="select select-bordered w-full max-w-xs"
+      formControlName="color"
+    >
+      <option disabled selected>Pick your favorite Simpson</option>
+      <option
+        *ngFor="let color of colors"
+        [ngValue]="color.id"
+      >
+        {{color.value}}
+      </option>
+    </select>
+
+    <button
+      type="submit"
+      class="btn"
+      [disabled]="form.invalid"
+    >
+      Создать
+    </button>
+  </form>
+
+  <div class="py-4 flex flex-col gap-2">
+    <span
+      class="badge"
+      *ngFor="let tag of tags"
+    >
+      {{tag.title}}
+    </span>
+  </div>
+</section>

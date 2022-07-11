@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { TagColorDto, TagCreateDto, TagDto } from '@app/core/dto';
 import { TagService } from '@app/core/services';
 import { catchError } from 'rxjs';
-import { FormControl, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-tag',
@@ -11,25 +11,29 @@ import { FormControl, Validators } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TagComponent implements OnInit {
-  tag: TagCreateDto = {
-    title: '',
-    color: 0
-  };
+
   tags: TagDto[] = [];
   colors: TagColorDto[] = [];
-  addTagControl = new FormControl('', [Validators.required]);
+
+  form = this.fb.group({
+    title: ['', Validators.required],
+    color: 0
+  });
 
   constructor(
+    public fb: FormBuilder,
     public tagService: TagService,
-    public ref: ChangeDetectorRef
+    public ref: ChangeDetectorRef,
   ) {
   }
 
   ngOnInit(): void {
-    this.tagService.getColor().subscribe(colors => {
+    this.tagService.getColor()
+      .subscribe(colors => {
         this.colors = colors;
         this.ref.markForCheck();
       });
+
     this.tagService.getAll()
       .subscribe(tags => {
         this.tags = tags;
@@ -52,7 +56,12 @@ export class TagComponent implements OnInit {
   }
 
   createTag() {
-    this.tagService.create(this.tag)
+    if (this.form.invalid) {
+      return;
+    }
+
+    const dto = this.form.value as TagCreateDto;
+    this.tagService.create(dto)
       .pipe(catchError((err) => {
         this.handleError(err);
         throw new Error(err);
