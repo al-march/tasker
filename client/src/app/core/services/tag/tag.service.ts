@@ -27,7 +27,8 @@ export class TagService extends BaseApiService {
   getColor() {
     return this.http.get<TagColorDto[]>(`${this.url}/colors`);
   }
-  get(id:number){
+
+  get(id: number) {
     return this.http.get<TagDto>(`${this.url}/${id}`);
 
   }

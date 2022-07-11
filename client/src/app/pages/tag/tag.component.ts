@@ -17,7 +17,8 @@ export class TagComponent implements OnInit {
   };
   tags: TagDto[] = [];
   colors: TagColorDto[] = [];
-  addTagControl =  new FormControl('', [Validators.required])
+  addTagControl = new FormControl('', [Validators.required]);
+
   constructor(
     public tagService: TagService,
     public ref: ChangeDetectorRef
@@ -25,19 +26,15 @@ export class TagComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tagService.getColor()
-      .pipe(catchError((err) => {
-        this.handleError(err);
-        throw new Error(err);
-      }))
-      .subscribe(colors => {
+    this.tagService.getColor().subscribe(colors => {
         this.colors = colors;
         this.ref.markForCheck();
       });
-    this.tagService.getAll().subscribe(tags => {
-      this.tags = tags;
-      this.ref.markForCheck();
-    });
+    this.tagService.getAll()
+      .subscribe(tags => {
+        this.tags = tags;
+        this.ref.markForCheck();
+      });
   }
 
   handleError(err: any) {
@@ -55,9 +52,14 @@ export class TagComponent implements OnInit {
   }
 
   createTag() {
-    this.tagService.create(this.tag).subscribe(tag => {
-      this.tags.unshift(tag);
-      this.ref.markForCheck();
-    });
+    this.tagService.create(this.tag)
+      .pipe(catchError((err) => {
+        this.handleError(err);
+        throw new Error(err);
+      }))
+      .subscribe(tag => {
+        this.tags.unshift(tag);
+        this.ref.markForCheck();
+      });
   }
 }
