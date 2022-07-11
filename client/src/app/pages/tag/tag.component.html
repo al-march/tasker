@@ -1,0 +1,32 @@
+<form name="form" (ngSubmit)="createTag()">
+  <input
+    type="text"
+    name="title"
+    placeholder="Type here"
+    required
+    class="input w-full max-w-xs"
+    [(ngModel)]="tag.title"
+  />
+  <select
+    class="select w-full max-w-xs"
+    name="color"
+    [(ngModel)]="tag.color"
+  >
+    <option disabled selected>Pick your favorite Simpson</option>
+    <option
+      *ngFor="let color of colors"
+      [ngValue]="color.id"
+    >
+      {{color.value}}
+    </option>
+  </select>
+  <button class="btn">Button</button>
+</form>
+
+<div class="">
+  <span
+    class="badge"
+    *ngFor="let tag of tags">
+    {{tag.title}}
+  </span>
+</div>
