@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TagComponent } from './tag.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TagRoutingModule } from './tag-routing.module';
 
 
@@ -16,7 +16,8 @@ import { TagRoutingModule } from './tag-routing.module';
   imports: [
     CommonModule,
     FormsModule,
-    TagRoutingModule
+    TagRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class TagModule { }

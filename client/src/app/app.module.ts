@@ -6,6 +6,7 @@ import { TemplateModule } from '@app/core/template';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { Config } from '@app/core/services';
 import { AuthInterceptor } from '@app/core/interceptors';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AuthInterceptor } from '@app/core/interceptors';
     AppRoutingModule,
     HttpClientModule,
     TemplateModule,
+    ReactiveFormsModule
   ],
   providers: [
     Config,
