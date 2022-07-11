@@ -7,6 +7,7 @@ import (
 	"tasker/config"
 	"tasker/db"
 	"tasker/rest/project"
+	"tasker/rest/tag"
 	"tasker/rest/task"
 	"tasker/rest/user"
 )
@@ -31,10 +32,12 @@ func main() {
 	userController := user.Controller{App: app}
 	projectController := project.Controller{App: app}
 	taskController := task.Controller{App: app}
+	tagController := tag.Controller{App: app}
 
 	userController.Init()
 	projectController.Init()
 	taskController.Init()
+	tagController.Init()
 
 	err := app.Listen(":8080")
 	if err != nil {

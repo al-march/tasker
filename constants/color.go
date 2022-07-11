@@ -34,3 +34,15 @@ func (c Color) String() string {
 	}
 	return "undefined"
 }
+
+type ColorDto struct {
+	ID    int    `json:"id"`
+	Value string `json:"value"`
+}
+
+func (c Color) Dto() ColorDto {
+	return ColorDto{
+		ID:    int(c),
+		Value: c.String(),
+	}
+}
