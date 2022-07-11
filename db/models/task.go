@@ -18,7 +18,7 @@ type Task struct {
 }
 
 func (t Task) Dto() TaskDto {
-	tags := entitiesToDto[TagDto](t.Tags)
+	tags := EntitiesToDto[TagDto](t.Tags)
 
 	return TaskDto{
 		ID:          t.ID,

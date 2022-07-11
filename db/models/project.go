@@ -17,7 +17,7 @@ type Project struct {
 }
 
 func (p Project) Dto() ProjectDto {
-	tags := entitiesToDto[TagDto](p.Tags)
+	tags := EntitiesToDto[TagDto](p.Tags)
 
 	return ProjectDto{
 		ID:          p.ID,
@@ -41,5 +41,5 @@ type ProjectDto struct {
 	CreatedAt   time.Time `json:"createdAt"`
 	UpdatedAt   time.Time `json:"updatedAt"`
 
-	Manager ProjectManagerDto `json:"manager"`
+	Manager ProjectManagerDto `json:"manager,omitempty"`
 }

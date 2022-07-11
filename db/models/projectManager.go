@@ -9,8 +9,8 @@ type ProjectManager struct {
 }
 
 func (pm ProjectManager) Dto() ProjectManagerDto {
-	invitedUsers := entitiesToDto[UserDto](pm.InvitedUsers)
-	memberedUsers := entitiesToDto[UserDto](pm.MemberedUsers)
+	invitedUsers := EntitiesToDto[UserDto](pm.InvitedUsers)
+	memberedUsers := EntitiesToDto[UserDto](pm.MemberedUsers)
 
 	return ProjectManagerDto{
 		ID:            pm.ID,
@@ -21,8 +21,8 @@ func (pm ProjectManager) Dto() ProjectManagerDto {
 }
 
 type ProjectManagerDto struct {
-	ID            uint      `json:"id"`
-	ProjectID     uint      `json:"projectId"`
-	InvitedUsers  []UserDto `json:"invitedUsers"`
-	MemberedUsers []UserDto `json:"memberedUsers"`
+	ID            uint      `json:"id,omitempty"`
+	ProjectID     uint      `json:"projectId,omitempty"`
+	InvitedUsers  []UserDto `json:"invitedUsers,omitempty"`
+	MemberedUsers []UserDto `json:"memberedUsers,omitempty"`
 }
