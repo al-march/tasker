@@ -32,7 +32,7 @@ func (c Controller) create() {
 			Description string
 		}
 
-		var user = auth.TakeUser(ctx)
+		user := auth.TakeUser(ctx)
 		var request ProjectCreate
 		if err := ctx.BodyParser(&request); err != nil {
 			err := handler.ErrorInvalidRequest
@@ -69,6 +69,11 @@ func (c Controller) getAll() {
 			return ctx.Status(e.Status).JSON(e)
 		}
 
+		for i, item := range entities {
+			prManager := getPrManager(item.ID)
+			entities[i].Manager = prManager
+		}
+
 		projects := utils.Map(entities, func(project models.Project) models.ProjectDto {
 			return project.Dto()
 		})
@@ -97,6 +102,9 @@ func (c Controller) get() {
 			err := handler.ErrorEntityNotFound
 			return ctx.Status(err.Status).JSON(err)
 		}
+
+		prManager := getPrManager(project.ID)
+		project.Manager = prManager
 
 		return ctx.JSON(project.Dto())
 	})
@@ -134,4 +142,13 @@ func (c Controller) update() {
 
 		return ctx.JSON(entity.Dto())
 	})
+}
+
+func getPrManager(projectID uint) models.ProjectManager {
+	prManager := models.ProjectManager{ProjectID: projectID}
+	db.DB.
+		Where(prManager).
+		FirstOrCreate(&prManager)
+
+	return prManager
 }

@@ -11,8 +11,9 @@ type Project struct {
 	Title       string
 	Description string
 
-	Tasks []Task `gorm:"foreignKey:ProjectID"`
-	Tags  []Tag  `gorm:"many2many:project_tags"`
+	Tasks   []Task         `gorm:"foreignKey:ProjectID"`
+	Tags    []Tag          `gorm:"many2many:project_tags"`
+	Manager ProjectManager `gorm:"foreignKey:ProjectID"`
 }
 
 func (p Project) Dto() ProjectDto {
@@ -26,6 +27,8 @@ func (p Project) Dto() ProjectDto {
 		Tags:        tags,
 		CreatedAt:   p.CreatedAt,
 		UpdatedAt:   p.UpdatedAt,
+
+		Manager: p.Manager.Dto(),
 	}
 }
 
@@ -37,4 +40,6 @@ type ProjectDto struct {
 	Tags        []TagDto  `json:"tags"`
 	CreatedAt   time.Time `json:"createdAt"`
 	UpdatedAt   time.Time `json:"updatedAt"`
+
+	Manager ProjectManagerDto `json:"manager"`
 }
