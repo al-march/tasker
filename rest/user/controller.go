@@ -12,6 +12,7 @@ import (
 	"tasker/db"
 	"tasker/db/models"
 	"tasker/rest/handler"
+	"tasker/utils"
 )
 
 const publicPath = "api/v1/auth"
@@ -26,6 +27,7 @@ func (c Controller) Init() {
 	c.login()
 	// private methods
 	c.info()
+	c.notification()
 }
 
 func (c Controller) registration() {
@@ -126,10 +128,64 @@ func (c Controller) info() {
 	})
 }
 
+func (c Controller) notification() {
+	c.App.Get(privatePath+"/invites", func(ctx *fiber.Ctx) error {
+		user := auth.TakeUser(ctx)
+
+		invitedProjects := make([]models.Project, 0)
+
+		type invite struct {
+			UserID           uint `json:"userId"`
+			ProjectManagerID uint `json:"projectManagerId"`
+		}
+
+		var invites []invite
+		err := db.DB.
+			Table("project_invited_users").
+			Where("user_id=?", user.ID).
+			Find(&invites).
+			Error
+
+		if err != nil {
+			return ctx.JSON(invitedProjects)
+		}
+
+		utils.ForEach(invites, func(item invite, i int) {
+			project, err := getProjectByManagerID(item.ProjectManagerID)
+			if err == nil {
+				invitedProjects = append(invitedProjects, project)
+			}
+		})
+
+		projects := models.EntitiesToDto[models.ProjectDto](invitedProjects)
+		return ctx.JSON(projects)
+	})
+}
+
 func getHash(p string) string {
 	hash, err := bcrypt.GenerateFromPassword([]byte(p), bcrypt.MinCost)
 	if err != nil {
 		log.Println(err)
 	}
 	return string(hash)
+}
+
+func getProjectByID(projectID uint) (models.Project, error) {
+	var project models.Project
+	err := db.DB.
+		Where("id=?", projectID).
+		First(&project).
+		Error
+
+	return project, err
+}
+
+func getProjectByManagerID(managerID uint) (models.Project, error) {
+	var prManager models.ProjectManager
+	db.DB.
+		Where("id=?", managerID).
+		Omit("ProjectManager").
+		First(&prManager)
+
+	return getProjectByID(prManager.ProjectID)
 }
