@@ -16,6 +16,11 @@ const routes: Routes = [
     path: 'project',
     loadChildren: () => import('./pages/project/project.module')
       .then(m => m.ProjectModule)
+  },
+  {
+    path: 'tag',
+    loadChildren: () => import('./pages/tag/tag.module')
+      .then(m => m.TagModule)
   }
 ];
 

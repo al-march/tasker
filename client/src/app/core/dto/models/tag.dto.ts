@@ -9,3 +9,8 @@ export interface TagColorDto {
   id: number;
   value: string;
 }
+
+export interface TagCreateDto{
+  title: string;
+  color?: number;
+}
