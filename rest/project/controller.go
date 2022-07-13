@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 	"strconv"
 	"tasker/auth"
 	"tasker/db"
@@ -96,7 +97,6 @@ func (c Controller) get() {
 		err = db.DB.
 			Where("id = ? AND user_id = ?", projectID, user.ID).
 			Preload("Tags").
-			Preload("Tasks").
 			First(&project).
 			Error
 
@@ -105,8 +105,15 @@ func (c Controller) get() {
 			return ctx.Status(err.Status).JSON(err)
 		}
 
-		prManager := getPrManager(project.ID)
-		project.Manager = prManager
+		tasks := make([]models.Task, 0)
+		db.DB.
+			Where("project_id=? AND parent_task_id IS NULL", project.ID).
+			Preload("SubTasks", func(db *gorm.DB) *gorm.DB {
+				return db.Preload(clause.Associations)
+			}).
+			Find(&tasks)
+
+		project.Tasks = tasks
 
 		return ctx.JSON(project.Dto())
 	})

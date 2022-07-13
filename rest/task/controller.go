@@ -22,9 +22,10 @@ func (c Controller) Init() {
 func (c Controller) create() {
 	c.App.Post(path, func(ctx *fiber.Ctx) error {
 		type Request struct {
-			ProjectID   uint   `json:"projectId"`
-			Title       string `json:"title"`
-			Description string `json:"description"`
+			ProjectID    uint   `json:"projectId"`
+			ParentTaskID uint   `json:"prentTaskID"`
+			Title        string `json:"title"`
+			Description  string `json:"description"`
 
 			Tags []struct {
 				ID uint
@@ -53,11 +54,12 @@ func (c Controller) create() {
 		}
 
 		task := models.Task{
-			UserID:      user.ID,
-			ProjectID:   request.ProjectID,
-			Title:       request.Title,
-			Description: request.Description,
-			Tags:        tags,
+			UserID:       user.ID,
+			ProjectID:    request.ProjectID,
+			ParentTaskID: request.ParentTaskID,
+			Title:        request.Title,
+			Description:  request.Description,
+			Tags:         tags,
 		}
 		db.DB.Save(&task)
 		return ctx.JSON(task.Dto())
@@ -74,6 +76,7 @@ func (c Controller) get() {
 		err := db.DB.
 			Where("id = ? AND user_id = ?", taskID, user.ID).
 			Preload("Tags").
+			Preload("SubTasks").
 			First(&task).
 			Error
 
