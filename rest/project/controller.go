@@ -107,13 +107,25 @@ func (c Controller) get() {
 
 		tasks := make([]models.Task, 0)
 		db.DB.
-			Where("project_id=? AND parent_task_id IS NULL", project.ID).
+			Where("project_id=?", project.ID).
+			Where("parent_task_id IS NULL AND section_id IS NULL").
 			Preload("SubTasks", func(db *gorm.DB) *gorm.DB {
 				return db.Preload(clause.Associations)
 			}).
 			Find(&tasks)
 
+		sections := make([]models.Section, 0)
+		db.DB.
+			Where("project_id=?", project.ID).
+			Preload("Tasks", func(db *gorm.DB) *gorm.DB {
+				return db.
+					Where("parent_task_id is NULL").
+					Preload(clause.Associations)
+			}).
+			Find(&sections)
+
 		project.Tasks = tasks
+		project.Sections = sections
 
 		return ctx.JSON(project.Dto())
 	})

@@ -10,6 +10,7 @@ type Task struct {
 	UserID       uint
 	ProjectID    uint
 	ParentTaskID uint
+	SectionID    uint
 	Title        string
 	Description  string
 	Status       string
