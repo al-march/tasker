@@ -96,6 +96,7 @@ func (c Controller) get() {
 		err = db.DB.
 			Where("id = ? AND user_id = ?", projectID, user.ID).
 			Preload("Tags").
+			Preload("Tasks").
 			First(&project).
 			Error
 

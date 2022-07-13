@@ -18,6 +18,7 @@ type Project struct {
 
 func (p Project) Dto() ProjectDto {
 	tags := EntitiesToDto[TagDto](p.Tags)
+	tasks := EntitiesToDto[TaskDto](p.Tasks)
 
 	return ProjectDto{
 		ID:          p.ID,
@@ -25,6 +26,7 @@ func (p Project) Dto() ProjectDto {
 		Title:       p.Title,
 		Description: p.Description,
 		Tags:        tags,
+		Tasks:       tasks,
 		CreatedAt:   p.CreatedAt,
 		UpdatedAt:   p.UpdatedAt,
 
@@ -38,6 +40,7 @@ type ProjectDto struct {
 	Title       string    `json:"title"`
 	Description string    `json:"description"`
 	Tags        []TagDto  `json:"tags"`
+	Tasks       []TaskDto `json:"tasks"`
 	CreatedAt   time.Time `json:"createdAt"`
 	UpdatedAt   time.Time `json:"updatedAt"`
 
