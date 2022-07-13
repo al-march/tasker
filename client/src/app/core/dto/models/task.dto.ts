@@ -7,6 +7,7 @@ export interface TaskDto {
   projectId: number;
   status: string;
   tags: TagDto[];
+  subTasks: TaskDto[];
   title: string;
   updatedAt: string;
   userId: number;

@@ -1,0 +1,24 @@
+<ng-container *ngIf="task">
+  <section class="py-2 px-4 leading-none">
+    <header class="flex items-center gap-4">
+      <button
+        class="btn btn-circle btn-ghost btn-xs"
+        [class.invisible]="!task.subTasks.length"
+        (click)="toggleShow(!showTree)"
+      >
+        ▶
+      </button>
+      <input type="checkbox" class="checkbox checkbox-sm">
+      <h4 class="text-lg">{{task.title}}</h4>
+    </header>
+
+
+    <ng-container *ngIf="showTree">
+      <div class="p-2" *ngFor="let subTask of task.subTasks">
+        <app-task-tree
+          [task]="subTask">
+        </app-task-tree>
+      </div>
+    </ng-container>
+  </section>
+</ng-container>
