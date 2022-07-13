@@ -1,4 +1,4 @@
-import { TagDto, TaskDto, UserDto } from '@app/core/dto';
+import { SectionDto, TagDto, TaskDto, UserDto } from '@app/core/dto';
 
 export interface ProjectDto {
   id: number;
@@ -6,6 +6,7 @@ export interface ProjectDto {
   title: string;
   description: string;
   tags: TagDto[];
+  sections: SectionDto[];
   tasks: TaskDto[];
   manager: ProjectManagerDto;
   createdAt: string;
