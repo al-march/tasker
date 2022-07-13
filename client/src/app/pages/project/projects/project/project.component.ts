@@ -9,7 +9,7 @@ import { ProjectService } from '@app/core/services';
   styleUrls: ['./project.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'flex-1'
+    'class': 'flex-1 h-full overflow-hidden'
   }
 })
 export class ProjectComponent implements OnInit {

@@ -1,3 +1,5 @@
+import { Color } from '@ng-daisy/types';
+
 export interface TagDto {
   id: number;
   userId: number;
@@ -7,10 +9,10 @@ export interface TagDto {
 
 export interface TagColorDto {
   id: number;
-  value: string;
+  value: Color;
 }
 
-export interface TagCreateDto{
+export interface TagCreateDto {
   title: string;
   color?: number;
 }

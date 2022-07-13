@@ -1,22 +1,20 @@
 <ng-container *ngIf="task">
-  <section class="py-2 px-4 leading-none">
-    <header class="flex items-center gap-4">
+  <section class="px-4 leading-none">
+    <header class="flex p-2 items-center gap-4">
       <button
         class="btn btn-circle btn-ghost btn-xs"
         [class.invisible]="!task.subTasks.length"
         (click)="toggleShow(!showTree)"
       >
-        <span
-          class="transition-all"
-          [class.rotate-90]="showTree"
-        >
-          ▶
-        </span>
+        <span class="transition-all" [class.rotate-90]="showTree">▶</span>
       </button>
-      <input type="checkbox" class="checkbox checkbox-sm">
-      <h4 class="text-lg">{{task.title}}</h4>
-    </header>
 
+      <div class="flex-1">
+        <app-task
+          [task]="task">
+        </app-task>
+      </div>
+    </header>
 
     <ng-container>
       <div *ngFor="let subTask of task.subTasks">
