@@ -1,3 +1,16 @@
 <section class="h-full flex-1 p-2">
-  <p>Selected project: {{projectId$ | async}}</p>
+
+  <div *ngIf="project$ | async as project">
+    <h2 class="text-2xl">{{project.title}}</h2>
+
+    <ng-container *ngFor="let task of project.tasks">
+      <article class="py-2 px-4 leading-none">
+        <h4 class="text-lg font-semibold">{{task.title}}</h4>
+        <div class="flex gap-4 text-sm">
+          <p>{{task.createdAt | date:'dd.MM.yyyy'}}</p>
+          <p class="opacity-75 truncate">{{task.description}}</p>
+        </div>
+      </article>
+    </ng-container>
+  </div>
 </section>
