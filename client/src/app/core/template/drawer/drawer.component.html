@@ -9,17 +9,13 @@
     <ul class="menu overflow-y-auto w-72 bg-base-100 text-base-content">
       <!-- Sidebar content here -->
       <ul class="menu menu-compact flex flex-col p-0">
-        <li class="menu-title">
-          <span>Projects</span>
-        </li>
-        <li *ngFor="let project of projects$ | async">
+        <li>
           <a
+            routerLink="project"
             class="flex gap-4"
-            [routerLink]="['project', project.id]"
             [routerLinkActive]="['active']"
-            [routerLinkActiveOptions]="{ exact: false }"
           >
-            <span class="flex-1">{{project.title}}</span>
+            Projects
           </a>
         </li>
 

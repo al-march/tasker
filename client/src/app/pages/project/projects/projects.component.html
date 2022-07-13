@@ -1,0 +1,16 @@
+<section class="h-full flex-1 p-2">
+  <div class="flex flex-col gap-4">
+    <article
+      *ngFor="let project of projects$ | async"
+      class="card card-compact bg-base-100 shadow-lg"
+    >
+      <div class="card-body">
+        <h2 class="card-title">{{project.title}}</h2>
+        <p>{{project.description}}</p>
+        <div class="card-actions justify-end">
+          <a [routerLink]="['/project', project.id]" class="btn btn-primary">Открыть</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
