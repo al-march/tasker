@@ -108,7 +108,7 @@ func (c Controller) get() {
 		tasks := make([]models.Task, 0)
 		db.DB.
 			Where("project_id=?", project.ID).
-			Where("parent_task_id IS NULL AND section_id IS NULL").
+			Where("parent_task_id = 0 AND section_id = 0").
 			Preload("SubTasks", func(db *gorm.DB) *gorm.DB {
 				return db.Preload(clause.Associations)
 			}).

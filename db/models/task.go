@@ -9,8 +9,8 @@ type Task struct {
 	gorm.Model
 	UserID       uint
 	ProjectID    uint
-	ParentTaskID uint
-	SectionID    uint
+	ParentTaskID uint `gorm:"default:0"`
+	SectionID    uint `gorm:"default:0"`
 	Title        string
 	Description  string
 	Status       string

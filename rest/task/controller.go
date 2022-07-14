@@ -16,24 +16,26 @@ const path = "api/v1/task"
 
 func (c Controller) Init() {
 	c.create()
+	c.update()
 	c.get()
+}
+
+type request struct {
+	ProjectID    uint   `json:"projectId"`
+	ParentTaskID uint   `json:"prentTaskId"`
+	Title        string `json:"title"`
+	Description  string `json:"description"`
+
+	Tags []struct {
+		ID uint
+	} `json:"tags"`
 }
 
 func (c Controller) create() {
 	c.App.Post(path, func(ctx *fiber.Ctx) error {
-		type Request struct {
-			ProjectID    uint   `json:"projectId"`
-			ParentTaskID uint   `json:"prentTaskID"`
-			Title        string `json:"title"`
-			Description  string `json:"description"`
-
-			Tags []struct {
-				ID uint
-			} `json:"tags"`
-		}
 
 		user := auth.TakeUser(ctx)
-		var request Request
+		var request request
 
 		if err := ctx.BodyParser(&request); err != nil {
 			err := handler.ErrorInvalidRequest
@@ -66,11 +68,40 @@ func (c Controller) create() {
 	})
 }
 
+func (c Controller) update() {
+	c.App.Put(path+"/:id", func(ctx *fiber.Ctx) error {
+		user := auth.TakeUser(ctx)
+		taskID := ctx.Params("id", "-1")
+
+		var req request
+		if err := ctx.BodyParser(&req); err != nil {
+			err := handler.ErrorInvalidRequest
+			return ctx.Status(err.Status).JSON(err)
+		}
+
+		var task models.Task
+		err := db.DB.
+			Where("id=? AND user_id=?", taskID, user.ID).
+			First(&task).
+			Error
+
+		if err != nil {
+			err := handler.ErrorEntityNotFound
+			return ctx.Status(err.Status).JSON(err)
+		}
+
+		task.Title = req.Title
+		task.Description = req.Description
+
+		db.DB.Save(&task)
+		return ctx.JSON(task.Dto())
+	})
+}
+
 func (c Controller) get() {
 	c.App.Get(path+"/:id", func(ctx *fiber.Ctx) error {
 		user := auth.TakeUser(ctx)
-
-		taskID := ctx.Params("id", "0")
+		taskID := ctx.Params("id", "-1")
 
 		var task models.Task
 		err := db.DB.
