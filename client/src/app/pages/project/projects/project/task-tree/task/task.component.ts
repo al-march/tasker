@@ -12,7 +12,12 @@ import { TaskService } from '@app/core/services';
   styleUrls: ['./task.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
-    trigger('slide', SlideAnimation),
+    trigger('slide', SlideAnimation({
+      duration: {
+        enter: '240ms',
+        leave: '100ms'
+      }
+    })),
   ]
 })
 export class TaskComponent implements OnInit {

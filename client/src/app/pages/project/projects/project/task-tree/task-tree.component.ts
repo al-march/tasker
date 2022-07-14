@@ -9,7 +9,7 @@ import { SlideAnimation } from '@app/core/animations';
   styleUrls: ['./task-tree.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
-    trigger('slide', SlideAnimation),
+    trigger('slide', SlideAnimation()),
   ]
 })
 export class TaskTreeComponent implements OnInit {
