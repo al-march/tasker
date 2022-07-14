@@ -8,6 +8,8 @@ import { TaskTreeComponent } from './projects/project/task-tree/task-tree.compon
 import { BadgeModule } from '@ng-daisy/data-display';
 import { TaskComponent } from './projects/project/task-tree/task/task.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CdkMenuModule } from '@angular/cdk/menu';
+import { CdkScrollableModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProjectRoutingModule,
     BadgeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CdkMenuModule,
+    CdkScrollableModule
   ]
 })
 export class ProjectModule {}
