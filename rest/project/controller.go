@@ -119,7 +119,7 @@ func (c Controller) get() {
 			Where("project_id=?", project.ID).
 			Preload("Tasks", func(db *gorm.DB) *gorm.DB {
 				return db.
-					Where("parent_task_id is NULL").
+					Where("parent_task_id = 0").
 					Preload(clause.Associations)
 			}).
 			Find(&sections)
