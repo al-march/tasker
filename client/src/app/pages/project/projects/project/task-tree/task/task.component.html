@@ -1,7 +1,23 @@
 <div class="flex gap-2 items-center cursor-pointer">
   <input type="checkbox" class="checkbox checkbox-sm">
   <article class="flex flex-col">
-    <h4 class="text-lg">{{task.title}}</h4>
+    <div class="flex gap-2 items-center">
+      <input
+        type="text"
+        class="input input-sm"
+        [formControl]="title"
+      >
+
+      <button
+        *ngIf="title.value !== task.title"
+        class="btn btn-xs btn-warning"
+        (click)="updateTask({title: title.value})"
+        @slide
+      >
+        Save
+      </button>
+    </div>
+
     <nd-badge
       *ngFor="let tag of task.tags"
       [color]="tag.color.value"

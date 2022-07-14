@@ -4,3 +4,4 @@ export * from './config/config';
 export * from './auth/auth.service';
 export * from './tag/tag.service';
 export * from './project/project.service';
+export * from './task/task.service';

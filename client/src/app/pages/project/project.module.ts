@@ -7,6 +7,7 @@ import { ProjectComponent } from './projects/project/project.component';
 import { TaskTreeComponent } from './projects/project/task-tree/task-tree.component';
 import { BadgeModule } from '@ng-daisy/data-display';
 import { TaskComponent } from './projects/project/task-tree/task/task.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,9 @@ import { TaskComponent } from './projects/project/task-tree/task/task.component'
   imports: [
     CommonModule,
     ProjectRoutingModule,
-    BadgeModule
+    BadgeModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ProjectModule {}

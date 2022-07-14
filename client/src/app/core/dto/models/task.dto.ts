@@ -1,14 +1,24 @@
 import { TagDto } from '@app/core/dto';
 
 export interface TaskDto {
-  createdAt: string;
-  description: string;
   id: number;
+  userId: number;
   projectId: number;
+
   status: string;
+  title: string;
+  description: string;
+
   tags: TagDto[];
   subTasks: TaskDto[];
-  title: string;
+
   updatedAt: string;
-  userId: number;
+  createdAt: string;
+}
+
+export interface TaskCreateDto {
+  projectId: number;
+  title: string;
+  description: string;
+  tags: TagDto[];
 }
