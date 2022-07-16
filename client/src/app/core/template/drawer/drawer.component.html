@@ -1,11 +1,14 @@
 <div class="drawer drawer-mobile overflow-hidden h-full">
-  <input id="my-drawer-2" type="checkbox" class="drawer-toggle"/>
+  <input
+    type="checkbox"
+    class="drawer-toggle"
+    [checked]="drawer$ | async"
+  />
   <div class="drawer-content flex flex-col">
     <ng-content></ng-content>
-    <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">Open drawer</label>
   </div>
   <div class="drawer-side shadow-lg py-4">
-    <label for="my-drawer-2" class="drawer-overlay"></label>
+    <label (click)="toggle()" class="drawer-overlay"></label>
     <ul class="menu overflow-y-auto w-72 bg-base-100 text-base-content">
       <!-- Sidebar content here -->
       <ul class="menu menu-compact flex flex-col p-0">

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { TemplateService } from '@app/core/template/template.service';
 
 @Component({
   selector: 'app-header',
@@ -8,9 +9,14 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private template: TemplateService
+  ) { }
 
   ngOnInit(): void {
   }
 
+  toggleDrawer() {
+    this.template.toggleDrawer();
+  }
 }
