@@ -1,28 +1,32 @@
-<div class="flex gap-2 items-center cursor-pointer">
+<div class="flex gap-2 p-1 cursor-pointer">
   <input type="checkbox" class="checkbox checkbox-sm">
   <article class="flex flex-col flex-1">
     <div class="flex gap-2 items-center">
-      <button class="btn btn-xs btn-circle btn-ghost">
-        <i class="fa-solid fa-eye"></i>
-      </button>
 
-      <input
-        type="text"
-        class="input input-sm w-full"
-        [formControl]="title"
-      >
+      <div class="row row-col flex-1">
+        <h4>{{task.title}}</h4>
+
+        <p class="opacity-75 text-xs truncate flex flex-col pt-1">
+          <span>{{task.updatedAt | date:'dd.MM.YYYY'}}</span>
+          <span>{{task.description || 'Описания нет...'}}</span>
+        </p>
+
+        <div class="flex gap-2 p-1 items-center">
+          <span *ngIf="task.subTasks.length" class="text-sm opacity-90">
+            {{task.subTasks.length}} <i class="fa-solid fa-list-check"></i>
+          </span>
+
+          <nd-badge
+            *ngFor="let tag of task.tags"
+            [color]="tag.color.value"
+            size="xs"
+          >
+            {{tag.title}}
+          </nd-badge>
+        </div>
+      </div>
 
       <div class="w-32 flex flex-row gap-1">
-        <div class="w-24">
-          <button
-            *ngIf="title.value !== task.title"
-            class="btn btn-xs btn-square btn-warning"
-            (click)="updateTask({title: title.value})"
-            @slide
-          >
-            <i class="fa-solid fa-floppy-disk"></i>
-          </button>
-        </div>
         <button
           class="btn btn-xs btn-ghost btn-circle"
           [cdkMenuTriggerFor]="menu"
@@ -48,13 +52,5 @@
         </ng-template>
       </div>
     </div>
-
-    <nd-badge
-      *ngFor="let tag of task.tags"
-      [color]="tag.color.value"
-      size="xs"
-    >
-      {{tag.title}}
-    </nd-badge>
   </article>
 </div>
