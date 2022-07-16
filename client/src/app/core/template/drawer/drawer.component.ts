@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ProjectService } from '@app/core/services';
-import { TemplateService } from '@app/core/template/template.service';
+import { TemplateService } from '@app/core/template';
 
 @Component({
   selector: 'app-drawer',

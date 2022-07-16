@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { TemplateService } from '@app/core/template/template.service';
+import { TemplateService } from '@app/core/template';
 
 @Component({
   selector: 'app-root',
