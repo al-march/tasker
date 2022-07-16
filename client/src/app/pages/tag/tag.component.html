@@ -3,7 +3,7 @@
   class="p-4 h-full flex flex-col flex-1 overflow-hidden"
 >
   <form
-    class="flex gap-2"
+    class="flex gap-2 max-w-lg"
     [formGroup]="form"
     (ngSubmit)="createTag()"
   >
@@ -11,12 +11,12 @@
       type="text"
       placeholder="Tag name"
       required
-      class="input input-bordered w-full max-w-xs"
+      class="input input-bordered w-full flex-1"
       formControlName="title"
     />
 
     <select
-      class="select select-bordered w-full max-w-xs"
+      class="select select-bordered w-full flex-1"
       formControlName="color"
     >
       <option disabled selected>Pick tag color</option>
@@ -38,14 +38,14 @@
   </form>
 
   <div class="w-full overflow-y-scroll relative">
-    <table class="table w-full my-4">
+    <table class="table table-compact md:table-normal w-full my-4">
       <!-- head -->
       <thead class="sticky top-0">
         <tr>
           <th>Title</th>
           <th>Color</th>
           <th>Example</th>
-          <th>Actions</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
