@@ -8,7 +8,10 @@ import { FormBuilder, Validators } from '@angular/forms';
   selector: 'app-tag',
   templateUrl: './tag.component.html',
   styleUrls: ['./tag.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    'class': 'flex-1 h-full overflow-hidden'
+  }
 })
 export class TagComponent implements OnInit {
 
@@ -41,20 +44,6 @@ export class TagComponent implements OnInit {
       });
   }
 
-  handleError(err: any) {
-    const status = err.status as number;
-
-    switch (status) {
-      case 404:
-      case 400:
-        const error: { message: string } = err.error;
-        alert(error.message);
-        break;
-      default:
-        alert('Что-то пошло не так');
-    }
-  }
-
   createTag() {
     if (this.form.invalid) {
       return;
@@ -70,5 +59,38 @@ export class TagComponent implements OnInit {
         this.tags.unshift(tag);
         this.ref.markForCheck();
       });
+  }
+
+  onChangeColor(tag: TagDto) {
+    const id = tag.color.id;
+    const color = this.colors.find(c => c.id === id);
+    if (color) {
+      tag.color = {...color};
+    }
+    this.ref.markForCheck();
+  }
+
+  onUpdateTag(tag: TagDto) {
+    const dto: TagCreateDto = {title: tag.title, color: tag.color.id};
+    this.tagService.update(tag.id, dto)
+      .pipe(catchError((err) => {
+        this.handleError(err);
+        throw new Error(err);
+      }))
+      .subscribe();
+  }
+
+  handleError(err: any) {
+    const status = err.status as number;
+
+    switch (status) {
+      case 404:
+      case 400:
+        const error: { message: string } = err.error;
+        alert(error.message);
+        break;
+      default:
+        alert('Что-то пошло не так');
+    }
   }
 }

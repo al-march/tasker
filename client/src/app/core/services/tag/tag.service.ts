@@ -12,8 +12,8 @@ export class TagService extends BaseApiService {
     return this.http.post<TagDto>(`${this.url}`, dto);
   }
 
-  update(dto: TagDto) {
-    return this.http.put<TagDto>(`${this.url}/${dto.id}`, dto);
+  update(id: number, dto: TagCreateDto) {
+    return this.http.put<TagDto>(`${this.url}/${id}`, dto);
   }
 
   delete(id: number) {
