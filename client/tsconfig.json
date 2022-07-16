@@ -24,7 +24,7 @@
     ],
     "paths": {
       "@app/core/*": ["./src/app/core/*"],
-      "@app/page": ["./src/app/page/index.ts"],
+      "@app/page/*": ["./src/app/page/*"],
       "@ng-daisy/*": ["./src/app/lib/*"],
       "@ng-daisy/data-display": ["./src/app/lib/components/data-display/index.ts"],
     }

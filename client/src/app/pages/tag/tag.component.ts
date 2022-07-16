@@ -9,9 +9,6 @@ import { FormBuilder, Validators } from '@angular/forms';
   templateUrl: './tag.component.html',
   styleUrls: ['./tag.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    'class': 'flex-1 h-full overflow-hidden'
-  }
 })
 export class TagComponent implements OnInit {
 
