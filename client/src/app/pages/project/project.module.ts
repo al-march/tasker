@@ -11,6 +11,7 @@ import { ProjectRoutingModule } from './project-routing.module';
 import { ProjectsComponent } from './projects';
 import { ProjectComponent, TaskComponent, TaskTreeComponent } from './project';
 import { TemplateModule } from '@app/core/template';
+import { MenuModule } from '@ng-daisy/components/navigation';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { TemplateModule } from '@app/core/template';
     CdkScrollableModule,
     TemplateModule,
     BadgeModule,
+    MenuModule,
   ]
 })
 export class ProjectModule {}

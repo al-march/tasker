@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { TaskDto } from '@app/core/dto';
-import { animate, style, transition, trigger } from '@angular/animations';
+import { trigger } from '@angular/animations';
 import { SlideAnimation } from '@app/core/animations';
 
 @Component({
@@ -15,20 +15,6 @@ import { SlideAnimation } from '@app/core/animations';
         leave: '100ms'
       }
     })),
-    trigger('menu', [
-      transition(':enter', [
-        style({
-          overflow: 'hidden',
-          transform: `scale(0.9) translateY(10px)`,
-          opacity: 0,
-        }),
-        animate(`200ms ease-out`, style({
-          overflow: 'hidden',
-          transform: 'scale(1) translateY(0)',
-          opacity: 1,
-        })),
-      ]),
-    ])
   ]
 })
 export class TaskComponent implements OnInit {

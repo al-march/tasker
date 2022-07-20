@@ -42,13 +42,11 @@
         </button>
 
         <ng-template #menu>
-          <div cdkMenu>
-            <div @menu class="menu shadow-2xl bg-base-200">
-              <li cdkMenuItem><a>Редактировать</a></li>
-              <li cdkMenuItem><a>Приоритет</a></li>
-              <li cdkMenuItem><a>Удалить</a></li>
-            </div>
-          </div>
+          <nd-menu cdkMenu bgColor="base-300" shadow="2xl">
+            <nd-menu-item cdkMenuItem>Редактировать</nd-menu-item>
+            <nd-menu-item cdkMenuItem>Приоритет</nd-menu-item>
+            <nd-menu-item cdkMenuItem>Удалить</nd-menu-item>
+          </nd-menu>
         </ng-template>
       </div>
     </div>
