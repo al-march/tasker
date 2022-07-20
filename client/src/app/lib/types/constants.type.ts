@@ -5,3 +5,4 @@ export const Statuses = ['info', 'success', 'warning', 'error',] as const;
 export const brandColors = ['primary', 'secondary', 'accent'] as const;
 export const Colors = [...brandColors, 'ghost', ...Statuses,] as const;
 export const bgColors = ['base-100', 'base-200', 'base-300', 'neutral'] as const;
+export const Shadows = ['2xl', 'xl', 'lg', 'md', 'base', 'sm', 'none'] as const;
