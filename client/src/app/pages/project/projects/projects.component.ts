@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ProjectService } from '@app/core/services';
+import { ProjectStore } from '@app/core/services/project/project.store';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-projects',
@@ -9,13 +10,16 @@ import { ProjectService } from '@app/core/services';
 })
 export class ProjectsComponent implements OnInit {
 
-  projects$ = this.projects.getAll();
+  projects$ = this.projects.state$.pipe(
+    map(state => state.list)
+  );
 
   constructor(
-    private projects: ProjectService
+    private projects: ProjectStore
   ) { }
 
   ngOnInit(): void {
+    this.projects.getAll().subscribe();
   }
 
 }

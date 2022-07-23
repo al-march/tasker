@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs';
-import { ProjectService } from '@app/core/services';
+import { ProjectStore } from '@app/core/services';
 
 @Component({
   selector: 'app-project',
@@ -16,15 +16,14 @@ export class ProjectComponent implements OnInit {
   project$ = this.route.paramMap.pipe(
     map(map => map.get('id')),
     filter(id => !!id),
-    switchMap(id => this.projectService.get(+id!))
+    switchMap(id => this.projectStore.getOne(+id!))
   );
 
   constructor(
     private route: ActivatedRoute,
-    private projectService: ProjectService,
+    private projectStore: ProjectStore,
   ) { }
 
   ngOnInit(): void {
   }
-
 }
