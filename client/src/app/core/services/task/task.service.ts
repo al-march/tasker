@@ -14,4 +14,8 @@ export class TaskService extends BaseApiService {
   update(dto: TaskDto) {
     return this.http.put<TaskDto>(`${this.url}/${dto.id}`, dto);
   }
+
+  get(id: number | string) {
+    return this.http.get<TaskDto>(`${this.url}/${id}`);
+  }
 }

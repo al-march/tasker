@@ -3,15 +3,21 @@ import { CommonModule } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CdkMenuModule } from '@angular/cdk/menu';
+import { DialogModule } from '@angular/cdk/dialog';
 import { CdkScrollableModule } from '@angular/cdk/scrolling';
-
-import { BadgeModule } from '@ng-daisy/data-display';
 
 import { ProjectRoutingModule } from './project-routing.module';
 import { ProjectsComponent } from './projects';
-import { ProjectComponent, TaskComponent, TaskTreeComponent } from './project';
+import {
+  ProjectComponent,
+  TaskComponent,
+  TaskEditComponent,
+  TaskEditModalComponent,
+  TaskTreeComponent
+} from './project';
 import { TemplateModule } from '@app/core/template';
 import { MenuModule } from '@ng-daisy/components/navigation';
+import { BadgeModule } from '@ng-daisy/data-display';
 
 
 @NgModule({
@@ -19,7 +25,9 @@ import { MenuModule } from '@ng-daisy/components/navigation';
     ProjectComponent,
     ProjectsComponent,
     TaskTreeComponent,
-    TaskComponent
+    TaskComponent,
+    TaskEditComponent,
+    TaskEditModalComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +36,7 @@ import { MenuModule } from '@ng-daisy/components/navigation';
     ReactiveFormsModule,
     CdkMenuModule,
     CdkScrollableModule,
+    DialogModule,
     TemplateModule,
     BadgeModule,
     MenuModule,

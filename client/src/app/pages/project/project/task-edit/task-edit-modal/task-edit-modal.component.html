@@ -1,0 +1,35 @@
+<div class="modal-box w-full max-w-full max-h-full h-full p-0" *ngIf="task">
+  <div class="grid grid-cols-[3fr_1fr] gap-3 h-full">
+    <div class="flex flex-col h-full p-4">
+      <div class="flex flex-col gap-2">
+        <input type="text" class="input text-2xl pl-1" [(ngModel)]="task.title">
+        <input type="text" class="input input-sm pl-1" [(ngModel)]="task.description">
+      </div>
+
+      <span class="divider"></span>
+      <p class="opacity-75">Комментарий</p>
+      <textarea class="textarea textarea-bordered w-full my-4"></textarea>
+    </div>
+
+    <div class="bg-base-200 p-4">
+      <h3 class="text-lg">Метки</h3>
+      <nd-badge
+        *ngFor="let tag of task.tags"
+        [color]="tag.color.value"
+      >
+        {{tag.title}}
+      </nd-badge>
+
+      <i class="divider"></i>
+
+      <p class="flex justify-between opacity-75 text-sm">
+        <span>Создана: </span>
+        <span>{{task.createdAt | date:'dd.MM.YYYY'}}</span>
+      </p>
+      <p class="flex justify-between opacity-75 text-sm">
+        <span>Обновлена:</span>
+        <span>{{task.updatedAt | date:'dd.MM.YYYY'}}</span>
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,9 @@
 <app-page>
-  <div *ngIf="project$ | async as project" class="overflow-y-scroll">
+  <div
+    *ngIf="project$ | async as project"
+    class="overflow-y-scroll"
+    cdk-scrollable
+  >
     <div class="py-2 bg-base-100 sticky top-0 z-10">
       <header class="navbar rounded px-4 bg-base-200">
         <div class="flex-1">
@@ -37,4 +41,7 @@
       </section>
     </div>
   </div>
+
+  <!-- For editing task modal component -->
+  <router-outlet></router-outlet>
 </app-page>
