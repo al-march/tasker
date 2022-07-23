@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ProjectService } from '@app/core/services';
+import { ProjectStore } from '@app/core/services';
 import { TemplateService } from '@app/core/template';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-drawer',
@@ -10,11 +11,13 @@ import { TemplateService } from '@app/core/template';
 })
 export class DrawerComponent implements OnInit {
 
-  projects$ = this.projects.getAll();
+  projects$ = this.projects.state$.pipe(
+    map(state => state.list)
+  );
   drawer$ = this.template.drawer$;
 
   constructor(
-    private projects: ProjectService,
+    private projects: ProjectStore,
     private template: TemplateService,
   ) { }
 

@@ -19,7 +19,6 @@ export class ProjectsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.projects.getAll().subscribe();
   }
 
 }

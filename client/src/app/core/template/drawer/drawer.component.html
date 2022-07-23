@@ -17,8 +17,18 @@
             routerLink="project"
             class="flex gap-4"
             [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="{exact: true}"
           >
             Projects
+          </a>
+        </li>
+        <li *ngFor="let project of projects$ | async">
+          <a
+            [routerLink]="['project', project.id]"
+            class="flex gap-4 pl-8"
+            [routerLinkActive]="['active']"
+          >
+            {{project.title}}
           </a>
         </li>
 

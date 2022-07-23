@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { filter, map, Subject, switchMap, takeUntil } from 'rxjs';
+import { filter, map, merge, Observable, of, switchMap } from 'rxjs';
 import { ProjectStore } from '@app/core/services';
+import { ProjectDto } from '@app/core/dto';
 
 @Component({
   selector: 'app-project',
@@ -12,12 +13,12 @@ import { ProjectStore } from '@app/core/services';
     'class': 'flex-1 h-full overflow-hidden'
   }
 })
-export class ProjectComponent implements OnInit, OnDestroy {
+export class ProjectComponent {
 
-  project$ = this.projectStore.state$.pipe(
-    map(state => {
+  private onProjectsUpdate$ = this.projectStore.state$.pipe(
+    switchMap(state => {
       const id = this.route.snapshot.paramMap.get('id');
-      return state.map.get(parseInt(id || '0'));
+      return of(state.map.get(parseInt(id || '0')));
     })
   );
 
@@ -27,21 +28,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
     switchMap(id => this.projectStore.getOne(+id!))
   );
 
-  private destroy$ = new Subject();
+  project$: Observable<ProjectDto | undefined> = merge(
+    this.onProjectsUpdate$,
+    this.onRouteChange$
+  );
 
   constructor(
     private route: ActivatedRoute,
     private projectStore: ProjectStore,
   ) { }
-
-  ngOnInit(): void {
-    this.onRouteChange$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe();
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next(null);
-    this.destroy$.complete();
-  }
 }
