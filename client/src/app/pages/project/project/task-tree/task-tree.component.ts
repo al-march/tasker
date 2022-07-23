@@ -21,7 +21,7 @@ export class TaskTreeComponent implements OnInit {
   isChild = false;
 
   @Input()
-  showTree = false;
+  showTree = true;
 
   @Output()
   showTreeChange = new EventEmitter<boolean>();

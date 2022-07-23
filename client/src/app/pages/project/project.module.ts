@@ -11,7 +11,6 @@ import { ProjectsComponent } from './projects';
 import {
   ProjectComponent,
   TaskComponent,
-  TaskEditComponent,
   TaskEditModalComponent,
   TaskTreeComponent
 } from './project';
@@ -26,7 +25,6 @@ import { BadgeModule } from '@ng-daisy/data-display';
     ProjectsComponent,
     TaskTreeComponent,
     TaskComponent,
-    TaskEditComponent,
     TaskEditModalComponent,
   ],
   imports: [

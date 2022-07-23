@@ -3,7 +3,7 @@
   <article class="flex flex-col flex-1">
     <div class="flex gap-2 items-center">
 
-      <div class="row row-col flex-1" [routerLink]="['task', task.id]">
+      <div class="row row-col flex-1" [routerLink]="['.']" [queryParams]="{taskId: task.id}">
         <h4>{{task.title}}</h4>
 
         <p class="opacity-75 text-xs truncate flex flex-col pt-1">
@@ -44,7 +44,7 @@
         <ng-template #menu>
           <nd-menu cdkMenu bgColor="base-300" shadow="2xl">
             <nd-menu-item cdkMenuItem>
-              <span [routerLink]="['task', task.id]">Редактировать</span>
+              <span [routerLink]="['.']" [queryParams]="{taskId: task.id}">Редактировать</span>
             </nd-menu-item>
             <nd-menu-item cdkMenuItem>Приоритет</nd-menu-item>
             <nd-menu-item cdkMenuItem>Удалить</nd-menu-item>

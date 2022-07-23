@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ProjectCreateDto, ProjectDto } from '@app/core/dto';
-import { BehaviorSubject, map, of } from 'rxjs';
-import { ProjectService } from '@app/core/services';
+import { ProjectCreateDto, ProjectDto, TaskDto } from '@app/core/dto';
+import { BehaviorSubject, map, of, switchMap } from 'rxjs';
+import { ProjectService, TaskService } from '@app/core/services';
 
 export type ProjectsMap = Map<number, ProjectDto>;
 
@@ -26,7 +26,8 @@ export class ProjectStore {
   }
 
   constructor(
-    private service: ProjectService,
+    private project: ProjectService,
+    private task: TaskService
   ) {}
 
   getAll() {
@@ -39,7 +40,7 @@ export class ProjectStore {
   }
 
   forceGetAll() {
-    return this.service.getAll().pipe(map((list) => {
+    return this.project.getAll().pipe(map((list) => {
       const state = this.snapshot;
       this._projectsState$.next({...state, list});
       return state;
@@ -52,7 +53,12 @@ export class ProjectStore {
       return of(state.map.get(id));
     }
 
-    return this.service.get(id).pipe(map((project) => {
+    return this.forceGetOne(id);
+  }
+
+  forceGetOne(id: number) {
+    const state = this.snapshot;
+    return this.project.get(id).pipe(map((project) => {
       state.map.set(project.id, project);
       this._projectsState$.next({...state, map: new Map(state.map)});
       return project;
@@ -60,7 +66,7 @@ export class ProjectStore {
   }
 
   updateItem(dto: ProjectDto) {
-    return this.service.update(dto).pipe(map((project) => {
+    return this.project.update(dto).pipe(map((project) => {
       const state = this.snapshot;
       state.map.set(project.id, project);
       const updated: ProjectState = {
@@ -73,7 +79,7 @@ export class ProjectStore {
   }
 
   addItem(dto: ProjectCreateDto) {
-    return this.service.create(dto).pipe(map((project) => {
+    return this.project.create(dto).pipe(map((project) => {
       const state = this.snapshot;
       state.map.set(project.id, project);
       const updated: ProjectState = {
@@ -83,5 +89,18 @@ export class ProjectStore {
       this._projectsState$.next(updated);
       return updated;
     }));
+  }
+
+  updateTask(dto: TaskDto) {
+    const state = this.snapshot;
+    const project = state.map.get(dto.projectId);
+
+    if (!project) {
+      console.error(`Project with id: ${dto.projectId} not found`);
+    }
+
+    return this.task.update(dto).pipe(
+      switchMap(() => this.forceGetOne(dto.projectId))
+    )
   }
 }

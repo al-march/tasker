@@ -21,7 +21,8 @@
         <div class="px-2" *ngIf="showTree" @slide>
           <app-task-tree
             [task]="subTask"
-            [isChild]="true">
+            [isChild]="true"
+            (showTreeChange)="showTree = $event">
           </app-task-tree>
         </div>
       </div>
